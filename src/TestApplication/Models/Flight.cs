@@ -7,10 +7,8 @@ using CsvHelper.Configuration;
 
 namespace TestApplication.Models
 {
-	[System.Web.Mvc.Bind()]
 	public class Flight
 	{
-
 		public string DepartureAirportCode { get; set; }
 		public string DestinationAirportCode { get; set; }
 		public string FlightNumber { get; set; }

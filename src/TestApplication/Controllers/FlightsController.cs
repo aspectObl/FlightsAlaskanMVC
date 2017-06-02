@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web.Mvc;
-using CsvHelper;
-using CsvHelper.TypeConversion;
-using TestApplication.Models;
 using TestApplication.Repositories;
 using TestApplication.ViewModel;
 

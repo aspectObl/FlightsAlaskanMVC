@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Collections.Generic;
 using TestApplication.Models;
 
 namespace TestApplication.ViewModel
 {
-	[Bind()]
 	public class FlightsFilterResults
 	{
 		public FlightsFilterResults()
