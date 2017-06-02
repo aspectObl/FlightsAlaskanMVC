@@ -1,0 +1,110 @@
+﻿@model TestApplication.ViewModel.FlightsFilterResults
+@section scripts {
+	<script>
+		$(document).ready(function () {
+			$(".thead-inverse").click(function (evt) {
+				var sortfield = $(evt.target).attr("sortbyfield");
+				if ($("#SortBy").val() == sortfield) {
+					if ($("#IsDescending").val() == "true") {
+						$("#IsDescending").val("false");
+					}
+					else {
+						$("#IsDescending").val("true");
+					}
+				}
+				else {
+					$("#SortBy").val(sortfield);
+					$("#IsDescending").val("false");
+				}
+				evt.preventDefault();
+				$("form").submit();
+			});
+
+			$("#search").click(function (evt) {
+				var sortfield = $(evt.target).attr("sortbyfield");
+
+				$("#SortBy").val(null);
+				$("#IsDescending").val("false");
+
+				evt.preventDefault();
+				$("form").submit();
+			});
+		});
+	</script>
+
+}
+@{
+	ViewBag.Title = "Flights";
+}
+<br />
+@using (Html.BeginForm("Search", "Flights"))
+{	<div class="row">
+		<div class="col-xs-3">
+			<label>From (Airport Code):</label>
+			@Html.EditorFor(m => m.DepartureAirportCode)
+		</div>
+		<div class="col-xs-3">
+			<label>To (Airport Code):</label>
+			@Html.EditorFor(m => m.DestinationAirportCode)
+		</div>
+		<div class="col-xs-3" style="padding-top:24px;">
+			<input id="search" type="submit" value="Search Flights" />
+		</div>
+	</div>
+		@Html.HiddenFor(m => m.SortBy)
+		@Html.HiddenFor(m => m.IsDescending)
+		<br />
+	if (Model != null && Model.DepartureAirportDescription != null && Model.DestinationAirportDescription != null)
+	{
+		<div class="row" style="margin-bottom:10px;">
+			Search results for flights from @Model.DepartureAirportDescription to  @Model.DestinationAirportDescription ...
+		</div>
+	}
+	if (Model != null && Model.Flights != null && Model.Flights.Count > 0)
+	{
+		<div class="row">
+			<table class="table table-striped table-bordered">
+
+				<thead class="thead">
+					<tr>
+						<th>
+							Flight Number
+						</th>
+						<th>
+							<a sortbyfield="DPT"
+							   class="thead-inverse">Departure Time</a>
+						</th>
+						<th>
+							Arrival Time
+						</th>
+						<th>
+							<a sortbyfield="MCP"
+							   class="thead-inverse">Main Cabin Price</a> ($)
+						</th>
+						<th>
+							<a sortbyfield="FCP"
+							   class="thead-inverse">First Class Price</a> ($)
+						</th>
+					</tr>
+				</thead>
+				@foreach (var flight in Model.Flights)
+				{
+					<tr>
+						<td>@flight.FlightNumber</td>
+						<td>@flight.DepartureTime</td>
+						<td>@flight.ArrivalTime</td>
+						<td>@flight.MainCabinPrice</td>
+						<td>@flight.FirstClassPrice</td>
+					</tr>
+				}
+			</table>
+		</div>
+	}
+	else if (Model != null)
+	{
+		<div class="row">
+			No results found.
+		</div>
+	}
+
+}
